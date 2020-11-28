@@ -1,0 +1,47 @@
+"""Imaginary Coding Interview
+
+Create a function to check if a candidate is qualified in an imaginary coding interview of an imaginary tech startup.
+
+The criteria for a candidate to be qualified in the coding interview is:
+
+    The candidate should have complete all the questions.
+    The maximum time given to complete the interview is 120 minutes.
+    The maximum time given for very easy questions is 5 minutes each.
+    The maximum time given for easy questions is 10 minutes each.
+    The maximum time given for medium questions is 15 minutes each.
+    The maximum time given for hard questions is 20 minutes each.
+
+If all the above conditions are satisfied, return "qualified", else return "disqualified".
+
+You will be given a list of time taken by a candidate to solve a particular question and the total time taken by the
+candidate to complete the interview.
+
+Given a list , in a true condition will always be in the format
+[very easy, very easy, easy, easy, medium, medium, hard, hard].
+
+The maximum time to complete the interview includes a buffer time of 20 minutes."""
+
+
+def interview(lst, tot):
+    if tot > 120 or len(lst) < 8:
+        return 'disqualified'
+    very_easy_on_time = sum(lst[:2]) <= 10
+    easy_on_time = sum(lst[2:4]) <= 20
+    med_on_time = sum(lst[4:6]) <= 30
+    hard_on_time = sum(lst[6:8]) <= 40
+    if very_easy_on_time and easy_on_time and med_on_time and hard_on_time:
+        return 'qualified'
+    return 'disqualified'
+
+
+if __name__ == '__main__':
+    assert interview([5, 5, 10, 10, 15, 15, 20, 20], 120) == 'qualified'
+    assert interview([2, 3, 8, 6, 5, 12, 10, 18], 120) == 'qualified'
+    assert interview([2, 3, 8, 6, 5, 12, 10, 18], 64) == 'qualified'
+    assert interview([5, 5, 10, 10, 25, 15, 20, 20], 120) == 'disqualified'
+    assert interview([5, 5, 10, 10, 15, 15, 20], 120) == 'disqualified'
+    assert interview([5, 5, 10, 10, 15, 15, 20, 20], 130) == 'disqualified'
+    assert interview([5, 5, 10, 10, 15, 20, 50], 160) == 'disqualified'
+    assert interview([5, 5, 10, 10, 15, 15, 40], 120) == 'disqualified'
+    assert interview([10, 10, 15, 15, 20, 20], 150) == 'disqualified'
+    assert interview([5, 5, 10, 20, 15, 15, 20, 20], 140) == 'disqualified'
